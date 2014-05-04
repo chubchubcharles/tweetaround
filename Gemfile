@@ -19,6 +19,13 @@ group :doc do
   gem 'sdoc', '0.3.20', require: false
 end
 
+#Added this group for deployment onto Heroku which uses PostgreSQL
+#rails_12factor is used by Heroku to serve static assets
+group :production do
+  gem 'pg', '0.15.1'
+  gem 'rails_12factor', '0.0.2'
+end
+
 
 
 # source 'https://rubygems.org'
