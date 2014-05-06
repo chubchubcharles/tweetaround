@@ -1,0 +1,9 @@
+<h1>Welcome to Tweetaround</h1>
+<p> Type in a hashtag to see where its locations are at. </p>
+
+<%= form_tag("/search", method: "get") do %>
+  <%= label_tag(:q, "Search for hashtag:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search") %>
+<% end %>
+

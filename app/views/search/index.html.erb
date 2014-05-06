@@ -1,0 +1,11 @@
+<h1> Search page results </h1>
+
+
+<% if params[:q].blank? %>
+	<h1> blank! </h1>
+<% else %>
+	<h1> not blank! </h1>
+<% end %>
+
+<p> You typed in: <%= params[:q] %> </p>
+
