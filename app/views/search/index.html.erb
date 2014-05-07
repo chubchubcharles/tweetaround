@@ -7,7 +7,18 @@
 	<h1> not blank! </h1>
 <% end %>-->
 
-<h2> This is the word: <%= @hashtag %> and your first letter: <%= @hashtag[0] %> </h2>
+<h2> This is the word: <%= @query %> and your first letter: <%= @query[0] %> </h2>
+
+<ul> 
+	<li> Query: <%= @query %> </li>
+	<li> Geocode: <%= @geocode_query %></li>
+	<li> Base_Query: <%= @base_query %> </li>
+	<li> Query_Query: <%= @query_query %> </li>
+	<li> Geocode_Query: <%= @geocode_query %></li>
+	<li> Tail_Query: <%= @tail_query %> </li>
+	<li> Final_Query: <%= @final_query %> </li>
+</ul>
+
 
 <p> You typed in: <%= params[:q] %> </p>
 
