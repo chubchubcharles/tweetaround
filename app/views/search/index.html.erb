@@ -1,11 +1,13 @@
+<% provide(:title, 'Search') %>
 <h1> Search page results </h1>
 
-
-<% if params[:q].blank? %>
+<!--<% if params[:q].blank? %>
 	<h1> blank! </h1>
 <% else %>
 	<h1> not blank! </h1>
-<% end %>
+<% end %>-->
+
+<h2> This is the word: <%= @hashtag %> and your first letter: <%= @hashtag[0] %> </h2>
 
 <p> You typed in: <%= params[:q] %> </p>
 
