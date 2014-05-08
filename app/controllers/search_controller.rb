@@ -16,11 +16,11 @@ class SearchController < ApplicationController
 		#send query to twitter api
 		require 'twitter'
 		client = Twitter::REST::Client.new do |config|
-			config.consumer_key			= "6SyArVlzO5k0gb32QwM4qMDjf"
-			config.consumer_secret 		= "8XA6yi4W4zatX23mA1iLNV4zjiQggR7USSuODPuvVKydrz4pqx"
+			config.consumer_key			= TWITTER_CONSUMER_KEY
+			config.consumer_secret 		= TWITTER_CONSUMER_SECRET
 			#config.access_token 		= "61216133-pXgXx4MVF2Fs7AD5ADDwef2duo1w85CRCAgY8y7Q3"
 			#config.access_token_secret 	= "Enp0cedAxIWOrAzsQ01BnbsMRe45OpAURZ1bt5GkiCQKX"
-			config.bearer_token  		= "AAAAAAAAAAAAAAAAAAAAABLAXQAAAAAAQ3dr6Cn%2BgZLlhT335poTiuYSRs0%3DUQDRvF2byG3KIbQuf9pqqfawHbOMGeHZggGcyK2DF1maqovWDW"
+			config.bearer_token  		= TWTTER_BEARER_TOKEN
 		end 
 
 		@client_user = client.user("charlesliu2012")
