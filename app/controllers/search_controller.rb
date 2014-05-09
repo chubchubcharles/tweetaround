@@ -5,7 +5,8 @@ class SearchController < ApplicationController
     #test for montreal,canada
     @geocode = "45.505730%2C-73.579928%"
     #for SF: 37.781157,-122.398720,1mi  
-    @geocode_search = "geocode:" + "45.505730,-73.579928,1mi"
+    @geocode_search_1 = "geocode:" + "45.505730,-73.579928,1mi"
+    @geocode_search_2 = "geocode:" + "37.781157,-122.398720,1mi"
 
     #structuring query
     @base_query = "https://api.twitter.com/1.1/search/tweets.json?"
@@ -28,13 +29,38 @@ class SearchController < ApplicationController
     @client_user = client.user("charlesliu2012")
     @client_bearer_token = client.bearer_token
     @tweets = Array.new 
-    @request = @query + " " + @geocode_search
+    @request_1 = @query + " " + @geocode_search_1
+    @request_2 = @query + " " + @geocode_search_2
+
+  # multiple requests
+    require 'thread'
+    threads = []
+    threads << Thread.new { 
+      begin 
+      @montreal = client.search(@request_1, :result_type => "recent").take(1).pop.text 
+      rescue 
+        @montreal = "No tweets available."
+      end
+    }
+    threads << Thread.new { 
+      begin 
+      @sanfrancisco = client.search(@request_2, :result_type => "recent").take(1).pop.text 
+      rescue
+        @sanfrancisco = "No tweets available."
+      end 
+    }
+    threads.each(&:join) #waits for all the requests
+    @tweets.push(@montreal)
+    @tweets.push(@sanfrancisco)
+
+
+
 
    # def send_request
-      client.search(@request, :result_type => "recent").take(3).each do |tweet|
-        # puts tweet.text
-        @tweets.push(tweet.text)
-      end
+      # client.search(@request, :result_type => "recent").take(3).each do |tweet|
+      #   # puts tweet.text
+      #   @tweets.push(tweet.text)
+      # end
     # end
 
     # @tweets = client.user_timeline( count:2)
