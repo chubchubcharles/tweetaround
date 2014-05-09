@@ -7,27 +7,19 @@
 	<h1> not blank! </h1>
 <% end %>-->
 
-<!-- <h2> This is the word: <%= @query %> and your first letter: <%= @query[0] %> </h2>
-
-<ul> 
-	<li> Query: <%= @query %> </li>
-	<li> Geocode: <%= @geocode_query %></li>
-	<li> Base_Query: <%= @base_query %> </li>
-	<li> Query_Query: <%= @query_query %> </li>
-	<li> Geocode_Query: <%= @geocode_query %></li>
-	<li> Tail_Query: <%= @tail_query %> </li>
-	<li> Final_Query: <%= @final_query %> </li>
-</ul>
-	<br></br> -->
 
 <h3> Twitter API Request </h3>
 <u1> 
-	<li> Client User Object: <%= @client_user %> </li>
-	<li> Client Bearer Token: <%= @client_bearer_token %> </li>
-	<li> Search request 1: <%= @request_1 %> </li>
-	<li> Search request 2: <%= @request_2 %> </li>
+	<!-- <li> Client User Object: <%= @client_user %> </li>
+	<li> Client Bearer Token: <%= @client_bearer_token %> </li> -->
+	<% @urls.each do |url| %>
+		<li> <%= url %> </li>
+	<% end %>
+<!-- <% @clone_tweets.each do |clone_tweet| %>
+		<li> <%= clone_tweet %> </li>
+	<% end %> -->
 	<% @tweets.each do |tweet| %>
-		<li> <%= tweet %> </li>
+		<li> <span style="font-size:20px"> <%= tweet %> </span> </li>
 	<% end %>
 </u1>
 

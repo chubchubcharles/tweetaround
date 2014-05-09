@@ -1,59 +1,60 @@
 class SearchController < ApplicationController
   def index
-    @query = params[:q]
+    @geocode_location = Array.new
+    @urls = Array.new
 
-    #test for montreal,canada
-    @geocode = "45.505730%2C-73.579928%"
-    #for SF: 37.781157,-122.398720,1mi  
-    @geocode_search_1 = "geocode:" + "45.505730,-73.579928,1mi"
-    @geocode_search_2 = "geocode:" + "37.781157,-122.398720,1mi"
+    def format_query(params)
+      #evaluate the input and store values into geocode_location coordinates
+      @query = params[:q]
 
-    #structuring query
-    @base_query = "https://api.twitter.com/1.1/search/tweets.json?"
-    @query_query = "q=" + @query
-    @geocode_query = "&geocode=" + @geocode 
-    @tail_query = "2C1mi&result_type=recent"
+      #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
+      @geocode_location << "geocode:" + "45.505730,-73.579928,1mi"
+      @geocode_location << "geocode:" + "37.781157,-122.398720,1mi"
 
-    @final_query = @base_query + @query_query + @geocode_query + @tail_query
+      #helper method to insert 
+      @geocode_location.each do |geocode|
+        @urls << @query + " " + geocode
+      end
+
+    end
 
     #send query to twitter api
     require 'twitter'
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key     = ENV["TWITTER_CONSUMER_KEY"]
-      config.consumer_secret    = ENV["TWITTER_CONSUMER_SECRET"]
-      #config.access_token    = "61216133-pXgXx4MVF2Fs7AD5ADDwef2duo1w85CRCAgY8y7Q3"
-      #config.access_token_secret   = "Enp0cedAxIWOrAzsQ01BnbsMRe45OpAURZ1bt5GkiCQKX"
-      config.bearer_token     = ENV["TWTTER_BEARER_TOKEN"]
-    end 
-
-    @client_user = client.user("charlesliu2012")
-    @client_bearer_token = client.bearer_token
-    @tweets = Array.new 
-    @request_1 = @query + " " + @geocode_search_1
-    @request_2 = @query + " " + @geocode_search_2
-
-  # multiple requests
     require 'thread'
-    threads = []
-    threads << Thread.new { 
-      begin 
-      @montreal = client.search(@request_1, :result_type => "recent").take(1).pop.text 
-      rescue 
-        @montreal = "No tweets available."
-      end
-    }
-    threads << Thread.new { 
-      begin 
-      @sanfrancisco = client.search(@request_2, :result_type => "recent").take(1).pop.text 
-      rescue
-        @sanfrancisco = "No tweets available."
+
+    client = ""
+    def twitter_request(client)
+      #find twitter client
+      client = Twitter::REST::Client.new do |config|
+        config.consumer_key     = ENV["TWITTER_CONSUMER_KEY"]
+        config.consumer_secret    = ENV["TWITTER_CONSUMER_SECRET"]
+        config.bearer_token     = ENV["TWTTER_BEARER_TOKEN"]
       end 
-    }
-    threads.each(&:join) #waits for all the requests
-    @tweets.push(@montreal)
-    @tweets.push(@sanfrancisco)
+      @client_user = client.user("charlesliu2012")
+      @client_bearer_token = client.bearer_token
+    
 
+      #multiple requests
+      @tweets = Array.new 
+      #delete later
+      @clone_tweets = Array.new
+      #conduct multiple requests
+      threads = []
+      @urls.each do |city_query|
+        threads << Thread.new{
+          begin 
+          @tweets.push(client.search(city_query, :result_type => "recent").take(1).pop.text)
+          rescue
+          @tweets.push("No tweets available!")
+          end
+        }
+      end
+      threads.each(&:join) #waits for all the requests   
+    end
 
+    #Main methods
+    format_query(params)
+    twitter_request(client)
 
 
    # def send_request
