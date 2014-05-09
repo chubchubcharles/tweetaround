@@ -7,7 +7,7 @@
 	<h1> not blank! </h1>
 <% end %>-->
 
-<h2> This is the word: <%= @query %> and your first letter: <%= @query[0] %> </h2>
+<!-- <h2> This is the word: <%= @query %> and your first letter: <%= @query[0] %> </h2>
 
 <ul> 
 	<li> Query: <%= @query %> </li>
@@ -18,12 +18,18 @@
 	<li> Tail_Query: <%= @tail_query %> </li>
 	<li> Final_Query: <%= @final_query %> </li>
 </ul>
+	<br></br> -->
 
-<u1> Twitter API Request
+<h3> Twitter API Request </h3>
+<u1> 
 	<li> Client User Object: <%= @client_user %> </li>
 	<li> Client Bearer Token: <%= @client_bearer_token %> </li>
-	<li> Response: <%= @response %> </li>
+	<li> Search request: <%= @request %> </li>
+	<% @tweets.each do |tweet| %>
+		<li> <%= tweet %> </li>
+	<% end %>
 </u1>
+
 
 <p> You typed in: <%= params[:q] %> </p>
 
