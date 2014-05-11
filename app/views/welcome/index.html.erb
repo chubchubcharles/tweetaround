@@ -6,8 +6,8 @@
 	<%= form_tag("/search", method: "get") do %>
   	<%= label_tag(:q, "Search for hashtag:") %>
   	<%= text_field_tag(:q) %>
-  	<%= label_tag(:message, "Location:") %>
-  	<%= text_field_tag(:message)%>
+  	<%= label_tag(:location, "Location:") %>
+  	<%= text_field_tag(:location)%>
   	<br></br>
   	<%= submit_tag("Search")%>
 	<% end %>

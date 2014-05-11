@@ -6,10 +6,12 @@ class SearchController < ApplicationController
     def format_query(params)
       #evaluate the input and store values into geocode_location coordinates
       @query = params[:q]
+      @location = params[:location]
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
       @geocode_location << "geocode:" + "45.505730,-73.579928,1mi"
       @geocode_location << "geocode:" + "37.781157,-122.398720,1mi"
+      @geocode_location << "geocode:" + address_to_coordinates + ",1mi"
 
       #helper method to insert 
       @geocode_location.each do |geocode|
@@ -52,9 +54,22 @@ class SearchController < ApplicationController
       threads.each(&:join) #waits for all the requests   
     end
 
+    require 'rest-client'
+    require 'crack'
+    def address_to_coordinates
+      @address = params[:location]
+      @base_google_url = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&address="
+      res = RestClient.get(URI.encode("#{@base_google_url}#{@address}"))
+      parsed_res = Crack::XML.parse(res) #parsing XML 
+      lat = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lat"]
+      lng = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lng"]
+      return "#{lat},#{lng}" #important to use double quotes for string interp.
+    end
+
     #Main methods
     format_query(params)
     twitter_request(client)
+    
 
 
    # def send_request

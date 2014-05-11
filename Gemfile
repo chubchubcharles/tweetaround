@@ -18,7 +18,8 @@ gem 'twitter', '5.8.0'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sprockets', '2.11.0'
 gem 'geocoder'
-
+gem 'rest-client'
+gem 'crack'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

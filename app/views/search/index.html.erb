@@ -12,17 +12,20 @@
 <u1> 
 	<!-- <li> Client User Object: <%= @client_user %> </li>
 	<li> Client Bearer Token: <%= @client_bearer_token %> </li> -->
-	<% @urls.each do |url| %>
+<!--	<% @urls.each do |url| %>
 		<li> <%= url %> </li>
-	<% end %>
+	<% end %> -->
 <!-- <% @clone_tweets.each do |clone_tweet| %>
 		<li> <%= clone_tweet %> </li>
 	<% end %> -->
+
 	<% @tweets.each do |tweet| %>
 		<li> <span style="font-size:20px"> <%= tweet %> </span> </li>
 	<% end %>
+
+<!-- 	<li> <%= @location %> </li>
+	<li> <%= @coordinates %> </li> -->
+
 </u1>
 
-
-<p> You typed in: <%= params[:q] %> </p>
 
