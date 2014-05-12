@@ -10,6 +10,7 @@
 
 <h3> Twitter API Request </h3>
 <u1> 
+	<!-- TWITTER REQUEST -->
 	<!-- <li> Client User Object: <%= @client_user %> </li>
 	<li> Client Bearer Token: <%= @client_bearer_token %> </li> -->
 <!--	<% @name_to_urls.each do |url| %>
@@ -19,21 +20,23 @@
 		<li> <%= clone_tweet %> </li>
 	<% end %> -->
 
+
 	<% @tweets.each do |key, value| %>
 		<li> <span style="font-size:20px"> <%= key %> : <%= value %> </span> </li>
 	<% end %>
 
- 	<!-- <li> First Location: <%= @location %> </li>
+	<!-- GOOGLE MAPS API REQUEST -->
+ <!-- 	<li> First Location: <%= @location %> </li>
 	<li> Query: <%= @name_to_urls["#{@location}"] %> </li> 
 
-
  	<li> Second Location: <%= @location1 %> </li>
-	<li> Query: <%= @name_to_urls["#{@location1}"] %> </li> 
-	 -->
-	 	<li> <%= @spaghetti %> </li>
+	<li> Query: <%= @name_to_urls["#{@location1}"] %> </li>  -->
+	 	
 	 <% if ((defined? @weird_lat) || (defined? @weird_lng)) %>
 	 	<li> Weird Latitude: <%= @weird_lat %> </li>
+	 	<li> Weird Latitude Class: <%= @weird_lat.class %>
 	 	<li> Weird Longitude: <%= @weird_lng %> </li>
+	 	<li> Weird Longitude Class: <%= @weird_lng.class %>
 	 <% end %>
 
 </u1>

@@ -12,6 +12,7 @@ Tweetaround::Application.routes.draw do
   #routed search from submit button to create action
   get "search" => "search#index"
 
+  get "welcome" => "welcome#index"
 
   #need to change into "search#location" I think
 

@@ -36,20 +36,31 @@ class SearchController < ApplicationController
       @location1 = params[:location1]
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
-      #10 STATIC CITIES
-      @name_to_urls["Montreal"] = "geocode:" + "45.505730,-73.579928,2mi"
-      @name_to_urls["San Francisco"] = "geocode:" + "37.781157,-122.398720,2mi"
-      # @name_to_urls["Vancouver"]
-      # @name_to_urls["Toronto"]
-      # @name_to_urls["New York"]
-      # @name_to_urls["London"]
-      # @name_to_urls["Paris"]
+      #14 STATIC CITIES
+      @name_to_urls["Montreal, Canada"] = "geocode:" + "45.505730,-73.579928,2mi"
+      @name_to_urls["San Francisco, USA"] = "geocode:" + "37.781157,-122.398720,2mi"
+      @name_to_urls["Vancouver, Canada"] = "geocode:" + "49.2612260,-123.1139268,2mi"
+      @name_to_urls["Toronto, Canada"] = "geocode:" + "43.6532260,-79.3831843,2mi"
+      @name_to_urls["New York, USA"] = "geocode:" + "40.7056308,-73.9780035,2mi"
+      @name_to_urls["Los Angeles, USA"] = "geocode:" + "34.0522342,-118.2436849,2mi "
+      @name_to_urls["London, England"] = "geocode:" + "51.5085150,-0.1254872,2mi "
+      @name_to_urls["Paris, France"] = "geocode:" + "48.8566140,2.3522219,2mi "
+      @name_to_urls["Berlin, Germany"] = "geocode:" + "52.5200066,13.4049540,2mi "
+      @name_to_urls["Hong Kong, Hong Kong"] = "geocode:" + "22.3964280,114.1094970,2mi "
+      @name_to_urls["Taipei, Taiwan"] = "geocode:" + "25.0910750,121.5598345,2mi "
+      @name_to_urls["Tokyo, Japan"] = "geocode:" + "35.6894875,139.6917064,2mi"
+      @name_to_urls["Seoul, South Korea"] = "geocode:" + "37.5665350,126.9779692,2mi"
+      @name_to_urls["Sydney, Australia"] = "geocode:" + "-33.8674869,151.2069902,2mi"
 
       #...
 
       #2 DYNAMIC CITIES
-      @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location]) + ",2mi"
-      @name_to_urls["#{params[:location1]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location1]) + ",2mi"
+      unless (params[:location].blank?)
+        @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location]) + ",2mi"
+      end
+      unless (params[:location1].blank?)
+        @name_to_urls["#{params[:location1]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location1]) + ",2mi"
+      end
     end
 
     #send query to twitter api
@@ -102,21 +113,6 @@ class SearchController < ApplicationController
     #5/11
     #tried installing google-maps-for-rail
     #completed steps including install underscore and npm (nodeJS package manager), but somehow running the server "rails s" gives me error.    
-    #5/12
-    #trying to figure out why queries like "Paris" and "Shanghai" sometimes don't work.
-
-
-   # def send_request
-      # client.search(@request, :result_type => "recent").take(3).each do |tweet|
-      #   # puts tweet.text
-      #   @tweets.push(tweet.text)
-      # end
-    # end
-
-    # @tweets = client.user_timeline( count:2)
-    #for each major city
-
-      #search for hashtag in twitter api
 
 end
 
