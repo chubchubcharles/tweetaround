@@ -2,8 +2,9 @@
 <html>
 <head>
   <title><%= full_title(yield(:title)) %></title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
+  <%= javascript_include_tag "_gmaps.js" %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
 </head>
@@ -11,6 +12,7 @@
 	<%= render 'layouts/header' %>
 	<div class="container">
 		<%= yield %>
+    <%= yield :scripts %>
 		<%= render 'layouts/footer' %>
 	</div>
 </body>

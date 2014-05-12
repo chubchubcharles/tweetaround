@@ -46,6 +46,7 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     geocoder (1.2.0)
+    gmaps4rails (2.1.2)
     hike (1.2.3)
     http (0.5.0)
       http_parser.rb
@@ -138,6 +139,7 @@ GEM
     uglifier (2.1.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    underscore-rails (1.6.0)
 
 PLATFORMS
   ruby
@@ -147,6 +149,7 @@ DEPENDENCIES
   coffee-rails (= 4.0.1)
   crack
   geocoder
+  gmaps4rails (~> 2.1.2)
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
   pg (= 0.15.1)
@@ -160,3 +163,4 @@ DEPENDENCIES
   turbolinks (= 1.1.1)
   twitter (= 5.8.0)
   uglifier (= 2.1.1)
+  underscore-rails (= 1.6.0)
