@@ -1,23 +1,55 @@
 class SearchController < ApplicationController
   def index
+    @address = Array.new
     @geocode_location = Array.new
-    @urls = Array.new
+    @name_to_urls = Hash.new
+
+    require 'rest-client'
+    require 'crack'
+    def address_to_coordinates(address)
+      @address = address
+      @base_google_url = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&address="
+      res = RestClient.get(URI.encode("#{@base_google_url}#{@address}"))
+      @spaghetti  = URI.encode("#{@base_google_url}#{@address}")
+      parsed_res = Crack::XML.parse(res) #parsing XML 
+      begin
+        lat = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lat"]
+        lng = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lng"]
+      rescue
+        @weird_lat = parsed_res["GeocodeResponse"]["result"]
+        @weird_lng = parsed_res["GeocodeResponse"]["result"]
+      end  
+      # @coordinates = "#{lat},#{lng}"
+      return "#{lat},#{lng}" #important to use double quotes for string interp.
+    end
+
+    def time
+      start = Time.now
+      yield
+      @request_time = Time.now - start
+    end 
 
     def format_query(params)
       #evaluate the input and store values into geocode_location coordinates
       @query = params[:q]
       @location = params[:location]
+      @location1 = params[:location1]
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
-      @geocode_location << "geocode:" + "45.505730,-73.579928,1mi"
-      @geocode_location << "geocode:" + "37.781157,-122.398720,1mi"
-      @geocode_location << "geocode:" + address_to_coordinates + ",1mi"
+      #10 STATIC CITIES
+      @name_to_urls["Montreal"] = "geocode:" + "45.505730,-73.579928,2mi"
+      @name_to_urls["San Francisco"] = "geocode:" + "37.781157,-122.398720,2mi"
+      # @name_to_urls["Vancouver"]
+      # @name_to_urls["Toronto"]
+      # @name_to_urls["New York"]
+      # @name_to_urls["London"]
+      # @name_to_urls["Paris"]
 
-      #helper method to insert 
-      @geocode_location.each do |geocode|
-        @urls << @query + " " + geocode
-      end
+      #...
 
+      #2 DYNAMIC CITIES
+      @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location]) + ",2mi"
+      @name_to_urls["#{params[:location1]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location1]) + ",2mi"
     end
 
     #send query to twitter api
@@ -35,41 +67,43 @@ class SearchController < ApplicationController
       @client_user = client.user("charlesliu2012")
       @client_bearer_token = client.bearer_token
     
-
       #multiple requests
-      @tweets = Array.new 
+      @urls_to_name = @name_to_urls.invert
+      @tweets = Hash.new 
       #delete later
       @clone_tweets = Array.new
       #conduct multiple requests
       threads = []
-      @urls.each do |city_query|
-        threads << Thread.new{
-          begin 
-          @tweets.push(client.search(city_query, :result_type => "recent").take(1).pop.text)
-          rescue
-          @tweets.push("No tweets available!")
-          end
-        }
-      end
-      threads.each(&:join) #waits for all the requests   
+      
+      #timing start
+      time do
+        @name_to_urls.each do |name, url|
+          threads << Thread.new{
+            begin 
+            tweet = client.search(url, :result_type => "recent").take(1).pop.text
+            name = @urls_to_name["#{url}"]
+            @tweets["#{name}"] = tweet
+            # @tweets.push(client.search(city_query, :result_type => "recent").take(1).pop.text)
+            rescue
+            name = @urls_to_name["#{url}"]
+            @tweets["#{name}"] = "No tweets available!"
+            end
+          }
+        end
+        threads.each(&:join) #waits for all the requests  
+      end  
     end
 
-    require 'rest-client'
-    require 'crack'
-    def address_to_coordinates
-      @address = params[:location]
-      @base_google_url = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&address="
-      res = RestClient.get(URI.encode("#{@base_google_url}#{@address}"))
-      parsed_res = Crack::XML.parse(res) #parsing XML 
-      lat = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lat"]
-      lng = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lng"]
-      return "#{lat},#{lng}" #important to use double quotes for string interp.
-    end
 
     #Main methods
     format_query(params)
     twitter_request(client)
-    
+  
+    #5/11
+    #tried installing google-maps-for-rail
+    #completed steps including install underscore and npm (nodeJS package manager), but somehow running the server "rails s" gives me error.    
+    #5/12
+    #trying to figure out why queries like "Paris" and "Shanghai" sometimes don't work.
 
 
    # def send_request

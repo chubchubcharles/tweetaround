@@ -12,20 +12,35 @@
 <u1> 
 	<!-- <li> Client User Object: <%= @client_user %> </li>
 	<li> Client Bearer Token: <%= @client_bearer_token %> </li> -->
-<!--	<% @urls.each do |url| %>
+<!--	<% @name_to_urls.each do |url| %>
 		<li> <%= url %> </li>
 	<% end %> -->
 <!-- <% @clone_tweets.each do |clone_tweet| %>
 		<li> <%= clone_tweet %> </li>
 	<% end %> -->
 
-	<% @tweets.each do |tweet| %>
-		<li> <span style="font-size:20px"> <%= tweet %> </span> </li>
+	<% @tweets.each do |key, value| %>
+		<li> <span style="font-size:20px"> <%= key %> : <%= value %> </span> </li>
 	<% end %>
 
-<!-- 	<li> <%= @location %> </li>
-	<li> <%= @coordinates %> </li> -->
+ 	<!-- <li> First Location: <%= @location %> </li>
+	<li> Query: <%= @name_to_urls["#{@location}"] %> </li> 
+
+
+ 	<li> Second Location: <%= @location1 %> </li>
+	<li> Query: <%= @name_to_urls["#{@location1}"] %> </li> 
+	 -->
+	 	<li> <%= @spaghetti %> </li>
+	 <% if ((defined? @weird_lat) || (defined? @weird_lng)) %>
+	 	<li> Weird Latitude: <%= @weird_lat %> </li>
+	 	<li> Weird Longitude: <%= @weird_lng %> </li>
+	 <% end %>
 
 </u1>
+	<h2> This process took <%= @request_time %> seconds </h2>
+
+	<div style='width: 800px;'>
+  		<div id="map" style='width: 800px; height: 400px;'></div>
+	</div>
 
 

@@ -20,6 +20,7 @@ gem 'sprockets', '2.11.0'
 gem 'geocoder'
 gem 'rest-client'
 gem 'crack'
+# gem 'gmaps4rails'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
