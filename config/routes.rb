@@ -14,6 +14,8 @@ Tweetaround::Application.routes.draw do
 
   get "welcome" => "welcome#index"
 
+  get "gmaps" => "gmaps#index"
+
   #need to change into "search#location" I think
 
   # Example of regular route:

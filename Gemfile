@@ -20,7 +20,7 @@ gem 'sprockets', '2.11.0'
 gem 'geocoder'
 gem 'rest-client'
 gem 'crack'
-gem 'gmaps4rails', '~>2.1.2'
+gem 'gmaps4rails' 
 gem 'underscore-rails', '1.6.0'
 gem 'figaro'
 

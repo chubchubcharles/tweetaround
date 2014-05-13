@@ -4,7 +4,11 @@
 	<h4> Type in a hashtag to see what people are talking about around the world!</h3>
   <h4> Add 2 more cities, if you wish, to see what people are talking about there!</h3>
 
-	<%= form_tag("/search", method: "get") do %>
+  <!--<%= link_to "Page with gmap", 'gmaps', 'data-no-turbolink' => true %> -->
+
+
+  <%= form_tag({:controller => "search", :action => "index"}, {:method => "get", :'data-no-turbolink' => true}) do %>
+
   	<%= label_tag(:q, "Search for hashtag:") %>
   	<%= text_field_tag(:q) %>
   	<%= label_tag(:location, "Location: (Optional)") %>
