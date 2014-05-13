@@ -75,7 +75,7 @@ class SearchController < ApplicationController
         config.consumer_secret    = ENV["TWITTER_CONSUMER_SECRET"]
         config.access_token     = ENV["TWITTER_ACCESS_TOKEN"]
         config.access_token_secret = ENV["TWITTER_ACCESS_TOKEN_SECRET"]
-        # config.bearer_token     = ENV["TWTTER_BEARER_TOKEN"]
+        config.bearer_token     = ENV["TWTTER_BEARER_TOKEN"]
       end 
       # @client_user = client.user("charlesliu2012")
       @client_bearer_token = client.bearer_token
