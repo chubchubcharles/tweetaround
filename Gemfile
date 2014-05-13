@@ -22,6 +22,7 @@ gem 'rest-client'
 gem 'crack'
 gem 'gmaps4rails', '~>2.1.2'
 gem 'underscore-rails', '1.6.0'
+gem 'figaro'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
