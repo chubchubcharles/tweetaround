@@ -4,17 +4,24 @@
 
 <h1> Search page results </h1>
 
-<h3> Twitter API Request </h3>
-
 <div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+  <div id="map" style='width: 1000px; height: 800px;'></div>
 </div>
 
 <script type="text/javascript">
-	handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    {
+handler = Gmaps.build('Google');
+handler.buildMap({
+    provider: {
+      disableDefaultUI: true
+      // pass in other Google Maps API options here
+    },
+    internal: {
+      id: 'map'
+    }
+  },
+  function(){
+    markers = handler.addMarkers([
+     {
       "lat": 0,
       "lng": 0,
       "picture": {
@@ -23,11 +30,32 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
         "height": 36
       },
       "infowindow": "hello!"
+    },
+    {
+      "lat": 20,
+      "lng": 20,
+      "picture": {
+        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+        "width":  36,
+        "height": 36
+      },
+      "infowindow": "me too!"
+    },
+    {
+      "lat": 40,
+      "lng": 40,
+      "picture": {
+        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
+        "width":  36,
+        "height": 36
+      },
+      "infowindow": "hello!"
     }
-  ]);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-});
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  }
+);
 </script>
 
 <br></br>

@@ -8,22 +8,93 @@
 </div>
 
 <script type="text/javascript">
-	handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    {
-      "lat": 0,
-      "lng": 0,
-      "picture": {
-        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-        "width":  36,
-        "height": 36
-      },
-      "infowindow": "hello!"
+handler = Gmaps.build('Google');
+handler.buildMap({
+    provider: {
+      // disableDefaultUI: true
+      // pass in other Google Maps API options here
+    },
+    internal: {
+      id: 'map'
     }
-  ]);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-});
+  },
+  function(){
+
+    var key;
+    var name_tweet = [];
+    var name_coordinates = [];
+    var name_to_lat = [];
+    var name_to_lng = [];
+
+    name_tweet["Montreal, Canada"] = "Montreal tweet";
+    name_tweet["Toronto, Canada"] = "Toronto tweet";
+
+    name_coordinates["Montreal, Canada"] = "45.5086699,-73.5539925";
+    name_coordinates["Toronto, Canada"] = "43.6532260,-79.3831843";
+
+    // /*parsing for lat */
+
+     name_to_lat["Montreal, Canada"] = 45.5086699;
+     name_to_lat["Toronto, Canada"] = 43.6532260;
+    // /*parsing for lng */
+
+     name_to_lng["Montreal, Canada"] = -73.5539925;
+     name_to_lng["Toronto, Canada"] = -79.3831843;
+
+    var marker_array = [];
+
+    for (key in name_tweet){
+      marker_array.push({
+        "lat": name_to_lat[key],
+        "lng": name_to_lng[key],
+        "picture": {
+          "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+          "width":  50,
+          "height": 50
+        },
+        "infowindow": name_tweet[key]
+      });
+    }
+
+
+    // marker_array.push({
+    //     "lat": name_to_lat["Montreal, Canada"],
+    //     "lng": name_to_lng["Montreal, Canada"],
+    //     "picture": {
+    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+    //       "width":  50,
+    //       "height": 50
+    //     },
+    //     "infowindow": name_tweet["Montreal, Canada"]
+    //   });
+
+    // marker_array.push({
+    //     "lat": 21,
+    //     "lng": 123,
+    //     "picture": {
+    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+    //       "width":  50,
+    //       "height": 50
+    //     },
+    //     "infowindow": name_tweet["Toronto, Canada"]
+    //   });
+
+    markers = handler.addMarkers(marker_array);
+    // markers = handler.addMarkers([
+    //   {
+    //     "lat": 20,
+    //     "lng": 20,
+    //     "picture": {
+    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+    //       "width":  50,
+    //       "height": 50
+    //     },
+    //     "infowindow": "hello!"
+    //   }
+    // ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  }
+);
 </script>
 
