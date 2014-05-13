@@ -37,20 +37,20 @@ class SearchController < ApplicationController
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
       #14 STATIC CITIES
-      @name_to_urls["Montreal, Canada"] = "geocode:" + "45.505730,-73.579928,2mi"
-      @name_to_urls["San Francisco, USA"] = "geocode:" + "37.781157,-122.398720,2mi"
-      @name_to_urls["Vancouver, Canada"] = "geocode:" + "49.2612260,-123.1139268,2mi"
-      @name_to_urls["Toronto, Canada"] = "geocode:" + "43.6532260,-79.3831843,2mi"
-      @name_to_urls["New York, USA"] = "geocode:" + "40.7056308,-73.9780035,2mi"
-      @name_to_urls["Los Angeles, USA"] = "geocode:" + "34.0522342,-118.2436849,2mi "
-      @name_to_urls["London, England"] = "geocode:" + "51.5085150,-0.1254872,2mi "
-      @name_to_urls["Paris, France"] = "geocode:" + "48.8566140,2.3522219,2mi "
-      @name_to_urls["Berlin, Germany"] = "geocode:" + "52.5200066,13.4049540,2mi "
-      @name_to_urls["Hong Kong, Hong Kong"] = "geocode:" + "22.3964280,114.1094970,2mi "
-      @name_to_urls["Taipei, Taiwan"] = "geocode:" + "25.0910750,121.5598345,2mi "
-      @name_to_urls["Tokyo, Japan"] = "geocode:" + "35.6894875,139.6917064,2mi"
-      @name_to_urls["Seoul, South Korea"] = "geocode:" + "37.5665350,126.9779692,2mi"
-      @name_to_urls["Sydney, Australia"] = "geocode:" + "-33.8674869,151.2069902,2mi"
+      @name_to_urls["Montreal, Canada"] = @query + " " + "geocode:" + "45.505730,-73.579928,2mi"
+      @name_to_urls["San Francisco, USA"] = @query + " " + "geocode:" + "37.781157,-122.398720,2mi"
+      @name_to_urls["Vancouver, Canada"] = @query + " " + "geocode:" + "49.2612260,-123.1139268,2mi"
+      @name_to_urls["Toronto, Canada"] = @query + " " + "geocode:" + "43.6532260,-79.3831843,2mi"
+      @name_to_urls["New York, USA"] = @query + " " + "geocode:" + "40.7056308,-73.9780035,2mi"
+      @name_to_urls["Los Angeles, USA"] = @query + " " + "geocode:" + "34.0522342,-118.2436849,2mi "
+      @name_to_urls["London, England"] = @query + " " + "geocode:" + "51.5085150,-0.1254872,2mi "
+      @name_to_urls["Paris, France"] = @query + " " + "geocode:" + "48.8566140,2.3522219,2mi "
+      @name_to_urls["Berlin, Germany"] = @query + " " + "geocode:" + "52.5200066,13.4049540,2mi "
+      @name_to_urls["Hong Kong, Hong Kong"] = @query + " " + "geocode:" + "22.3964280,114.1094970,2mi "
+      @name_to_urls["Taipei, Taiwan"] = @query + " " + "geocode:" + "25.0910750,121.5598345,2mi "
+      @name_to_urls["Tokyo, Japan"] = @query + " " + "geocode:" + "35.6894875,139.6917064,2mi"
+      @name_to_urls["Seoul, South Korea"] = @query + " " + "geocode:" + "37.5665350,126.9779692,2mi"
+      @name_to_urls["Sydney, Australia"] = @query + " " + "geocode:" + "-33.8674869,151.2069902,2mi"
 
       #...
 
