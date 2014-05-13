@@ -10,7 +10,6 @@ class SearchController < ApplicationController
       @address = address
       @base_google_url = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&address="
       res = RestClient.get(URI.encode("#{@base_google_url}#{@address}"))
-      @spaghetti  = URI.encode("#{@base_google_url}#{@address}")
       parsed_res = Crack::XML.parse(res) #parsing XML 
       begin
         lat = parsed_res["GeocodeResponse"]["result"]["geometry"]["location"]["lat"]
@@ -18,6 +17,9 @@ class SearchController < ApplicationController
       rescue
         @weird_lat = parsed_res["GeocodeResponse"]["result"]
         @weird_lng = parsed_res["GeocodeResponse"]["result"]
+        # lat = "N/A"
+        # lng = "N/A"
+        @weird_coord = "#{lat},#{lng}"
       end  
       # @coordinates = "#{lat},#{lng}"
       return "#{lat},#{lng}" #important to use double quotes for string interp.
@@ -38,11 +40,11 @@ class SearchController < ApplicationController
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
       #14 STATIC CITIES
       @name_to_urls["Montreal, Canada"] = @query + " " + "geocode:" + "45.505730,-73.579928,2mi"
-      @name_to_urls["San Francisco, USA"] = @query + " " + "geocode:" + "37.781157,-122.398720,2mi"
+      @name_to_urls["San Francisco, US"] = @query + " " + "geocode:" + "37.781157,-122.398720,2mi"
       @name_to_urls["Vancouver, Canada"] = @query + " " + "geocode:" + "49.2612260,-123.1139268,2mi"
       @name_to_urls["Toronto, Canada"] = @query + " " + "geocode:" + "43.6532260,-79.3831843,2mi"
-      @name_to_urls["New York, USA"] = @query + " " + "geocode:" + "40.7056308,-73.9780035,2mi"
-      @name_to_urls["Los Angeles, USA"] = @query + " " + "geocode:" + "34.0522342,-118.2436849,2mi "
+      @name_to_urls["New York, US"] = @query + " " + "geocode:" + "40.7056308,-73.9780035,2mi"
+      @name_to_urls["Los Angeles, US"] = @query + " " + "geocode:" + "34.0522342,-118.2436849,2mi "
       @name_to_urls["London, England"] = @query + " " + "geocode:" + "51.5085150,-0.1254872,2mi "
       @name_to_urls["Paris, France"] = @query + " " + "geocode:" + "48.8566140,2.3522219,2mi "
       @name_to_urls["Berlin, Germany"] = @query + " " + "geocode:" + "52.5200066,13.4049540,2mi "
@@ -56,10 +58,18 @@ class SearchController < ApplicationController
 
       #2 DYNAMIC CITIES
       unless (params[:location].blank?)
-        @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location]) + ",2mi"
+        # if address_to_coordinates(params[:location]) == "N/A,N/A"
+        #   @name_to_urls["#{params[:location]}"] = "Location not found."
+        # else
+          @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location]) + ",2mi"
+        # end
       end
       unless (params[:location1].blank?)
+        # if address_to_coordinates(params[:location1]) == "N/A,N/A"
+        #   @name_to_urls["#{params[:location1]}"] = "Location not found."
+        # else 
         @name_to_urls["#{params[:location1]}"] = @query + " " + "geocode:" + address_to_coordinates(params[:location1]) + ",2mi"
+        # end
       end
     end
 
@@ -83,8 +93,6 @@ class SearchController < ApplicationController
       #multiple requests
       @urls_to_name = @name_to_urls.invert
       @tweets = Hash.new 
-      #delete later
-      @clone_tweets = Array.new
       #conduct multiple requests
       threads = []
       
@@ -92,15 +100,14 @@ class SearchController < ApplicationController
       time do
         @name_to_urls.each do |name, url|
           threads << Thread.new{
-            #begin 
-            tweet = client.search(url, :result_type => "recent").take(1).pop.text
-            name = @urls_to_name["#{url}"]
-            @tweets["#{name}"] = tweet
-            # @tweets.push(client.search(city_query, :result_type => "recent").take(1).pop.text)
-            #rescue
-            #name = @urls_to_name["#{url}"]
-            #@tweets["#{name}"] = "No tweets available!"
-            #end
+            begin 
+              tweet = client.search(url, :result_type => "recent").take(1).pop.text
+              name = @urls_to_name["#{url}"]
+              @tweets["#{name}"] = tweet
+            rescue
+              name = @urls_to_name["#{url}"]
+              @tweets["#{name}"] = "No tweets available!"
+            end
           }
         end
         threads.each(&:join) #waits for all the requests  

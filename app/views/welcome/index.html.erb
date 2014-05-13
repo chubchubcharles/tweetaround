@@ -1,15 +1,16 @@
 <div class="center hero-unit">
 	<!-- center hero-unit has special meaning in bootstrap -->
 	<h1>Welcome to Tweetaround!</h1>
-	<h3> Type in a hashtag to see what people are talking about around the world! Add 2 more cities, if you wish, to see what people are talking about there!</h3>
+	<h4> Type in a hashtag to see what people are talking about around the world!</h3>
+  <h4> Add 2 more cities, if you wish, to see what people are talking about there!</h3>
 
 	<%= form_tag("/search", method: "get") do %>
   	<%= label_tag(:q, "Search for hashtag:") %>
   	<%= text_field_tag(:q) %>
   	<%= label_tag(:location, "Location: (Optional)") %>
-  	<%= text_field_tag(:location)%>
+  	<%= text_field_tag(:location, placeholder="Boston, US")%>
     <%= label_tag(:location1, "Second Location: (Optional)") %>
-    <%= text_field_tag(:location1, placeholder="Toronto, Canada")%>
+    <%= text_field_tag(:location1, placeholder="Rome, Italy")%>
   	<br></br>
   	<%= submit_tag "Search", "data-no-turbolink" => true %>
 	<% end %>
