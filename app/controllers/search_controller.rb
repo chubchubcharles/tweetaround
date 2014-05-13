@@ -5,6 +5,7 @@ class SearchController < ApplicationController
     @name_to_lat = Hash.new
     @name_to_lng = Hash.new
     @name_to_urls = Hash.new
+    @test_var = "hi"
 
     require 'rest-client'
     require 'crack'
@@ -19,9 +20,9 @@ class SearchController < ApplicationController
       rescue
         @weird_lat = parsed_res["GeocodeResponse"]["result"]
         @weird_lng = parsed_res["GeocodeResponse"]["result"]
-        # lat = "N/A"
-        # lng = "N/A"
-        @weird_coord = "#{lat},#{lng}"
+        @name_to_lat[address] = " "
+        @name_to_lng[address] = " "
+        # @weird_coord = "#{lat},#{lng}"
       end  
       # @coordinates = "#{lat},#{lng}"
       # return "#{lat},#{lng}" #important to use double quotes for string interp.
@@ -41,6 +42,12 @@ class SearchController < ApplicationController
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
       #14 STATIC CITIES
+      @static_cities = ["Montreal, Canada", "San Francisco, US", "Vancouver, Canada" , "Toronto, Canada" , "New York, US" , "Los Angeles, US"]
+      @static_cities.each do |static_city|
+        address_to_coordinates(static_city)
+        @name_to_urls[static_city] = @query + " geocode:" + "#{@name_to_lat[static_city]},#{@name_to_lng[static_city]},2mi"
+      end
+
       # @name_to_urls["Montreal, Canada"] = @query + " " + "geocode:" + "45.505730,-73.579928,2mi"
       # @name_to_urls["San Francisco, US"] = @query + " " + "geocode:" + "37.781157,-122.398720,2mi"
       # @name_to_urls["Vancouver, Canada"] = @query + " " + "geocode:" + "49.2612260,-123.1139268,2mi"
@@ -63,14 +70,14 @@ class SearchController < ApplicationController
         # if address_to_coordinates(params[:location]) == "N/A,N/A"
         #   @name_to_urls["#{params[:location]}"] = "Location not found."
         # else
-          @name_to_urls["#{params[:location]}"] = @query + " " + "geocode:" + "#{@name_to_lat[@location]},#{@name_to_lng[@location]},2mi"
+          @name_to_urls["#{@location}"] = @query + " " + "geocode:" + "#{@name_to_lat[@location]},#{@name_to_lng[@location]},2mi"
         # end
       end
       unless (@location1.blank?)
         # if address_to_coordinates(params[:location1]) == "N/A,N/A"
         #   @name_to_urls["#{params[:location1]}"] = "Location not found."
         # else 
-          @name_to_urls["#{params[:location1]}"] = @query + " " + "geocode:" + "#{@name_to_lat[@location1]},#{@name_to_lng[@location1]},2mi"
+          @name_to_urls["#{@location1}"] = @query + " " + "geocode:" + "#{@name_to_lat[@location1]},#{@name_to_lng[@location1]},2mi"
         # end
       end
     end
