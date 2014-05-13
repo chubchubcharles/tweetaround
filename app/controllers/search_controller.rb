@@ -71,11 +71,11 @@ class SearchController < ApplicationController
     def twitter_request(client)
       #find twitter client (ISSUE: should this be in quotations?)
       client = Twitter::REST::Client.new do |config|
-        config.consumer_key     = "nLB7Ggg9eh7U71G6mixVUID12"
-        config.consumer_secret    = "fokdLgz58Qvygy1e9cgU3jYNqjp6aNvbQ78M9yvTmluyaMYliP"
-        config.access_token     = "61216133-pXgXx4MVF2Fs7AD5ADDwef2duo1w85CRCAgY8y7Q3"
-        config.access_token_secret = "Enp0cedAxIWOrAzsQ01BnbsMRe45OpAURZ1bt5GkiCQKX"
-        config.bearer_token     = "AAAAAAAAAAAAAAAAAAAAABLAXQAAAAAAQ3dr6Cn%2BgZLlhT335poTiuYSRs0%3DUQDRvF2byG3KIbQuf9pqqfawHbOMGeHZggGcyK2DF1maqovWDW"
+        config.consumer_key     = "#{ENV["TWITTER_CONSUMER_KEY"]}"
+        config.consumer_secret    = "#{ENV["TWITTER_CONSUMER_SECRET"]}" 
+        config.access_token     = "#{ENV[TWITTER_ACCESS_TOKEN]}" 
+        config.access_token_secret = "#{ENV[TWITTER_ACCESS_TOKEN_SECRET]}" 
+        config.bearer_token     =  "#{ENV[TWITTER_BEARER_TOKEN]}" 
       end 
       # @client_user = client.user("charlesliu2012")
       @client_bearer_token = client.bearer_token
