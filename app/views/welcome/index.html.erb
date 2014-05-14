@@ -1,8 +1,8 @@
 <div class="center hero-unit">
 	<!-- center hero-unit has special meaning in bootstrap -->
 	<h1>Welcome to Tweetaround!</h1>
-	<h4> Type in a hashtag to see what people are talking about around the world!</h3>
-  <h4> Add 2 more cities, if you wish, to see what people are talking about there!</h3>
+	<h4>Type in a topic or hashtag (ex: #yolo, love, hockey)</h4>
+  <h4> to see what people are talking about around the world! (By default: 11 cities have been chosen) </h4>
 
   <!--<%= link_to "Page with gmap", 'gmaps', 'data-no-turbolink' => true %> -->
 
@@ -11,10 +11,6 @@
 
   	<%= label_tag(:q, "Search for hashtag:") %>
   	<%= text_field_tag(:q) %>
-<!--   	<%= label_tag(:location, "Location: (Optional)") %>
-  	<%= text_field_tag(:location, placeholder="Boston, US")%>
-    <%= label_tag(:location1, "Second Location: (Optional)") %>
-    <%= text_field_tag(:location1, placeholder="Rome, Italy")%> -->
   	<br></br>
   	<%= submit_tag "Search", "data-no-turbolink" => true %>
 	<% end %>

@@ -2,7 +2,7 @@
 <script src="//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry" type="text/javascript"></script>
 <script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
 
-<h1> Search page results </h1>
+<h1> Tweets [Map] </h1>
 
 <div style='width: 800px;'>
   <div id="map" style='width: 1000px; height: 800px;'></div>
@@ -29,17 +29,17 @@ handler.buildMap({
     var name_to_lng = [];
 
     // tweets
-     name_tweet["Montreal, Canada"] = '<%= @tweets["Montreal, Canada"] %>';
-     name_tweet["Toronto, Canada"] = '<%= @tweets["Toronto, Canada"] %>';
-     name_tweet["San Francisco, US"] = '<%= @tweets["San Francisco, US"] %>';
-     name_tweet["New York, US"] = '<%= @tweets["New York, US"] %>';
-     name_tweet["Los Angeles, US"] = '<%= @tweets["Los Angeles, US"] %>';
-     name_tweet["London, England"] = '<%= @tweets["London, England"] %>';
-     name_tweet["Paris, France"] = '<%= @tweets["Paris, France"] %>';
-     name_tweet["Berlin, Germany"] = '<%= @tweets["Berlin, Germany"] %>';
-     name_tweet["Hong Kong"] = '<%= @tweets["Hong Kong"] %>';
-     name_tweet["Taipei, Taiwan"] = '<%= @tweets["Taipei, Taiwan"] %>';
-     name_tweet["Tokyo, Japan"] = '<%= @tweets["Tokyo, Japan"] %>';
+     name_tweet["Montreal, Canada"] = '<%= @tweets["Montreal, Canada"].to_s %>';
+     name_tweet["Toronto, Canada"] = '<%= @tweets["Toronto, Canada"].to_s %>';
+     name_tweet["San Francisco, US"] = '<%= @tweets["San Francisco, US"].to_s %>';
+     name_tweet["New York, US"] = '<%= @tweets["New York, US"].to_s %>';
+     name_tweet["Los Angeles, US"] = '<%= @tweets["Los Angeles, US"].to_s %>';
+     name_tweet["London, England"] = '<%= @tweets["London, England"].to_s %>';
+     name_tweet["Paris, France"] = '<%= @tweets["Paris, France"].to_s %>';
+     name_tweet["Berlin, Germany"] = '<%= @tweets["Berlin, Germany"].to_s %>';
+     name_tweet["Hong Kong"] = '<%= @tweets["Hong Kong"].to_s %>';
+     name_tweet["Taipei, Taiwan"] = '<%= @tweets["Taipei, Taiwan"].to_s %>';
+     name_tweet["Tokyo, Japan"] = '<%= @tweets["Tokyo, Japan"].to_s %>';
      // name_tweet["Seoul, South Korea"] = '<%= @tweets["Seoul, South Korea"] %>';
 
     // /*parsing for lat */
@@ -74,16 +74,18 @@ handler.buildMap({
     var marker_array = [];
 
     for (key in name_tweet){
-      marker_array.push({
-        "lat": name_to_lat[key],
-        "lng": name_to_lng[key],
-        "picture": {
-          "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
-          "width":  50,
-          "height": 50
-        },
-        "infowindow": name_tweet[key]
-      });
+        if (name_tweet[key] != "No tweets available!"){
+            marker_array.push({
+                "lat": name_to_lat[key],
+                "lng": name_to_lng[key],
+                "picture": {
+                  "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+                  "width":  50,
+                  "height": 50
+                },
+                "infowindow": name_tweet[key]
+            });
+        }
     }
     markers = handler.addMarkers(marker_array);
     handler.bounds.extendWith(markers);
@@ -94,15 +96,17 @@ handler.buildMap({
 
 <br></br>
 
+<h1> Tweets [List] </h1>
 <ul>
 	<% @tweets.each do |key, value| %>
-		<li> <span style="font-size:20px"> <%= key %> : <%= value %> </span> </li>
+		<li> <span style="font-size:20px;font-weight:bold"> <%= key %> </span> : <span style="font-size:15px"> <%= value %> </span> </li>
 	<% end %>
 	<% if ((defined? @weird_lat) || (defined? @weird_lng)) %>
-	 	<li> Weird Latitude: <%= @weird_lat %> </li>
+        <li> Google Maps API Error </li>
+<!-- 	 	<li> Weird Latitude: <%= @weird_lat %> </li>
 	 	<li> Weird Latitude Class: <%= @weird_lat.class %>
 	 	<li> Weird Longitude: <%= @weird_lng %> </li>
-	 	<li> Weird Longitude Class: <%= @weird_lng.class %>
+	 	<li> Weird Longitude Class: <%= @weird_lng.class %> -->
 	 <% end %>
 </ul>
 	<h2> This process took <%= @request_time %> seconds </h2>

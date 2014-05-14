@@ -41,8 +41,8 @@ class SearchController < ApplicationController
       @location1 = params[:location1]
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
-      #14 STATIC CITIES
-      @static_cities = ["Montreal, Canada" , "Toronto, Canada" , "San Francisco, US" , "New York, US" , "Los Angeles, US" , "London, England" "Paris, France" , "Berlin, Germany" , "Hong Kong" , "Taipei, Taiwan" , "Tokyo, Japan"]
+      #11 STATIC CITIES
+      @static_cities = ["Montreal, Canada" , "Toronto, Canada" , "San Francisco, US" , "New York, US" , "Los Angeles, US" , "London, England" , "Paris, France" , "Berlin, Germany" , "Hong Kong" , "Taipei, Taiwan" , "Tokyo, Japan"]
       # @static_cities = ["Montreal, Canada" , "Toronto, Canada" , "San Francisco, US" , "New York, US" , "Los Angeles, US" , "London, England" , "Paris, France" , "Berlin, Germany" , "Hong Kong" , "Taipei, Taiwan" , "Tokyo, Japan" , "Seoul, South Korea"]
       @static_cities.each do |static_city|
         address_to_coordinates(static_city)
@@ -113,7 +113,7 @@ class SearchController < ApplicationController
             begin 
               tweet = client.search(url, :result_type => "recent").take(1).pop.text
               name = @urls_to_name["#{url}"]
-              @tweets["#{name}"] = tweet
+              @tweets["#{name}"] = tweet.to_s
             rescue
               name = @urls_to_name["#{url}"]
               @tweets["#{name}"] = "No tweets available!"
