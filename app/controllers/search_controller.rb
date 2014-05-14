@@ -42,7 +42,8 @@ class SearchController < ApplicationController
 
       #NEED-MODIFICATION: TAKE LIST OF CITIES AND PLACE COORD INTO GEOCODE_LOCATION
       #14 STATIC CITIES
-      @static_cities = ["Montreal, Canada", "San Francisco, US", "Vancouver, Canada" , "Toronto, Canada" , "New York, US" , "Los Angeles, US"]
+      @static_cities = ["Montreal, Canada" , "Toronto, Canada" , "San Francisco, US" , "New York, US" , "Los Angeles, US" , "London, England" "Paris, France" , "Berlin, Germany" , "Hong Kong" , "Taipei, Taiwan" , "Tokyo, Japan"]
+      # @static_cities = ["Montreal, Canada" , "Toronto, Canada" , "San Francisco, US" , "New York, US" , "Los Angeles, US" , "London, England" , "Paris, France" , "Berlin, Germany" , "Hong Kong" , "Taipei, Taiwan" , "Tokyo, Japan" , "Seoul, South Korea"]
       @static_cities.each do |static_city|
         address_to_coordinates(static_city)
         @name_to_urls[static_city] = @query + " geocode:" + "#{@name_to_lat[static_city]},#{@name_to_lng[static_city]},2mi"
