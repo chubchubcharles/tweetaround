@@ -22,6 +22,7 @@ class SearchController < ApplicationController
         @weird_lng = parsed_res["GeocodeResponse"]["result"]
         @name_to_lat[address] = " "
         @name_to_lng[address] = " "
+        @google_maps_api_error = "Google Maps API Error"
         # @weird_coord = "#{lat},#{lng}"
       end  
       # @coordinates = "#{lat},#{lng}"

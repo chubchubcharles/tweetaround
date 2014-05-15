@@ -56,42 +56,7 @@ handler.buildMap({
       });
     }
 
-
-    // marker_array.push({
-    //     "lat": name_to_lat["Montreal, Canada"],
-    //     "lng": name_to_lng["Montreal, Canada"],
-    //     "picture": {
-    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
-    //       "width":  50,
-    //       "height": 50
-    //     },
-    //     "infowindow": name_tweet["Montreal, Canada"]
-    //   });
-
-    // marker_array.push({
-    //     "lat": 21,
-    //     "lng": 123,
-    //     "picture": {
-    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
-    //       "width":  50,
-    //       "height": 50
-    //     },
-    //     "infowindow": name_tweet["Toronto, Canada"]
-    //   });
-
     markers = handler.addMarkers(marker_array);
-    // markers = handler.addMarkers([
-    //   {
-    //     "lat": 20,
-    //     "lng": 20,
-    //     "picture": {
-    //       "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
-    //       "width":  50,
-    //       "height": 50
-    //     },
-    //     "infowindow": "hello!"
-    //   }
-    // ]);
     handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
   }

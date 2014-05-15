@@ -5,7 +5,7 @@
 <h1> Tweets [Map] </h1>
 
 <div style='width: 800px;'>
-  <div id="map" style='width: 1000px; height: 800px;'></div>
+  <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
 
 <script type="text/javascript">
@@ -14,6 +14,7 @@ handler.buildMap({
     provider: {
       // disableDefaultUI: true
       // pass in other Google Maps API options here
+      zoomControl: true
     },
     internal: {
       id: 'map'
@@ -72,9 +73,11 @@ handler.buildMap({
 
 
     var marker_array = [];
+    var counter = 0;
 
     for (key in name_tweet){
         if (name_tweet[key] != "No tweets available!"){
+            counter++;
             marker_array.push({
                 "lat": name_to_lat[key],
                 "lng": name_to_lng[key],
@@ -99,15 +102,17 @@ handler.buildMap({
 <h1> Tweets [List] </h1>
 <ul>
 	<% @tweets.each do |key, value| %>
-		<li> <span style="font-size:20px;font-weight:bold"> <%= key %> </span> : <span style="font-size:15px"> <%= value %> </span> </li>
+        <% if value != "No tweets available!" %>
+		  <li> <span style="font-size:20px;font-weight:bold"> <%= key %> </span> : <span style="font-size:15px"> <%= value %> </span> </li>
+        <% end %>
 	<% end %>
-	<% if ((defined? @weird_lat) || (defined? @weird_lng)) %>
-        <li> Google Maps API Error </li>
+	<% if defined? @google_maps_api_error %>
+        <li> <%= @google_map_api_error %> </li>
 <!-- 	 	<li> Weird Latitude: <%= @weird_lat %> </li>
 	 	<li> Weird Latitude Class: <%= @weird_lat.class %>
 	 	<li> Weird Longitude: <%= @weird_lng %> </li>
 	 	<li> Weird Longitude Class: <%= @weird_lng.class %> -->
 	 <% end %>
 </ul>
-	<h2> This process took <%= @request_time %> seconds </h2>
+	<h2> This process took <%= @request_time %> seconds</h2>
 	<h2> <%= @weird_coord %> </h2>
