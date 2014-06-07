@@ -1,6 +1,5 @@
 Tweetaround::Application.routes.draw do
-  get "welcome/index"
-  resources :microposts
+  resources :locations
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -21,6 +20,7 @@ Tweetaround::Application.routes.draw do
   get "help" => "welcome#help"
 
   get "contact" => "welcome#contact"
+
 
   #need to change into "search#location" I think
 

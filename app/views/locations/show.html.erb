@@ -1,0 +1,51 @@
+<!--<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>-->
+
+<h1> Tweets [Map] </h1>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({
+    provider: {
+      // disableDefaultUI: true
+      // pass in other Google Maps API options here
+      zoomControl: true
+    },
+    internal: {
+      id: 'map'
+    }
+  },
+  function(){
+
+    // for (key in name_tweet){
+    //     if (name_tweet[key] != "No tweets available!"){
+            marker_array.push({
+                "lat": name_to_lat[key],
+                "lng": name_to_lng[key],
+                "picture": {
+                  "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+                  "width":  50,
+                  "height": 50
+                },
+                "infowindow": name_tweet[key]
+            });
+    //     }
+    // }
+    markers = handler.addMarkers(marker_array);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  }
+);
+</script>
+
+<!--geocoder should give json file or coordinates, so that i can ask gmaps4rails to show me the map -->
+
+<h3>Nearby locations</h3>
+<ul>
+<% for location in @location.nearbys(10) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
