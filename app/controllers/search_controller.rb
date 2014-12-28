@@ -114,10 +114,11 @@ class SearchController < ApplicationController
             begin 
               tweet = client.search(url, :result_type => "recent").take(1).pop.text
               name = @urls_to_name["#{url}"]
-              @tweets["#{name}"] = tweet.to_s
+              tweet = tweet.to_s.gsub(/\n/," ")
+              @tweets["#{name}"] = "#{tweet}"
             rescue
-              name = @urls_to_name["#{url}"]
               @tweets["#{name}"] = "No tweets available!"
+              name = @urls_to_name["#{url}"]
             end
           }
         end

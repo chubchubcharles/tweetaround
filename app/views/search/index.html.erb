@@ -86,24 +86,24 @@ handler.buildMap({
         if (name_tweet[key] != "No tweets available!"){
             counter++;
             marker_array.push({
-                "lat": name_to_lat[key],
-                "lng": name_to_lng[key],
-                "picture": {
-                  "url": "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
-                  "width":  20,
-                  "height": 30
+                lat: name_to_lat[key],
+                lng: name_to_lng[key],
+                picture: {
+                  url: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7CFE7569",
+                  width:  20,
+                  height: 30
                 },
-                "infowindow": name_tweet[key]
+                infowindow: name_tweet[key]
             });
         }
     }
     markers = handler.addMarkers(marker_array);
     handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-    
-  }
-);
-  //google.maps.event.addDomListener(window, 'load', initialize);
+    // handler.fitMapToBounds();
+    handler.getMap().setZoom(1);
+
+  });
+  // google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <br></br>
@@ -115,13 +115,9 @@ handler.buildMap({
 		  <li> <span style="font-size:20px;font-weight:bold"> <%= key %> </span> : <span style="font-size:15px"> <%= value %> </span> </li>
         <% end %>
 	<% end %>
-	<% if defined? @google_maps_api_error %>
+<!-- 	<% if defined? @google_maps_api_error %>
         <li> <%= @google_map_api_error %> </li>
-<!-- 	 	<li> Weird Latitude: <%= @weird_lat %> </li>
-	 	<li> Weird Latitude Class: <%= @weird_lat.class %>
-	 	<li> Weird Longitude: <%= @weird_lng %> </li>
-	 	<li> Weird Longitude Class: <%= @weird_lng.class %> -->
-	 <% end %>
+	 <% end %> -->
 </ul>
 	<h2> This process took <%= @request_time %> seconds</h2>
 	<h2> <%= @weird_coord %> </h2>
